@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'layout/appbar.dart';
 import 'layout/drawer.dart';
 
-class TicTacToe extends StatefulWidget {
-  _TicTacToeState createState() => _TicTacToeState();
+class MineSweeper extends StatefulWidget {
+  _MineSweeperState createState() => _MineSweeperState();
 }
 
-class _TicTacToeState extends State<TicTacToe> {
+class _MineSweeperState extends State<MineSweeper> {
   List<List<String>> board = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""]
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
   ];
+
   bool isGameOver = false;
   String currentPlayer = "O";
 
@@ -51,9 +54,11 @@ class _TicTacToeState extends State<TicTacToe> {
   void _resetBoard() {
     setState(() {
       board = [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""]
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
       ];
       isGameOver = false;
       currentPlayer = "O";
@@ -72,7 +77,7 @@ class _TicTacToeState extends State<TicTacToe> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: buildAppBar(context, "Tic Tac Toe"),
+            appBar: buildAppBar(context, "Mine Sweeper"),
             drawer: buildDrawer(context),
             body: _buildBody(context),
             floatingActionButton: FloatingActionButton(
@@ -102,9 +107,9 @@ class _TicTacToeState extends State<TicTacToe> {
   Widget _buildBoard() {
     return Column(
         children: List.generate(
-      3,
+      5,
       (x) => Row(
-        children: new List.generate(3, (y) => _buildBox(x, y)),
+        children: new List.generate(5, (y) => _buildBox(x, y)),
       ),
     ));
   }
@@ -127,7 +132,7 @@ class _TicTacToeState extends State<TicTacToe> {
         },
         child: (Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.grey,
             border: border,
           ),
           height: height,
