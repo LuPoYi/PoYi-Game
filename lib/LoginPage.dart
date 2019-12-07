@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'TicTacToe.dart';
+import 'MineSweeper.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class LoginPage extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => new TicTacToe()));
+              new MaterialPageRoute(builder: (context) => new MineSweeper()));
         },
         padding: EdgeInsets.all(12),
         color: Color.fromRGBO(64, 75, 96, .9),

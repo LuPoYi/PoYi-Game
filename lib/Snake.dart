@@ -2,30 +2,12 @@ import 'package:flutter/material.dart';
 import 'layout/appbar.dart';
 import 'layout/drawer.dart';
 import 'layout/floatingActionButton.dart';
-import 'dart:math';
 
-class MineSweeper extends StatefulWidget {
-  _MineSweeperState createState() => _MineSweeperState();
+class Snake extends StatefulWidget {
+  _SnakeState createState() => _SnakeState();
 }
 
-class _MineSweeperState extends State<MineSweeper> {
-  List<List<String>> board = [
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-  ];
-
-  List<List<String>> coverBoard = [
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-  ];
-
-  int random_seed = 5;
+class _SnakeState extends State<Snake> {
   bool isGameOver = false;
 
   @override
@@ -33,36 +15,8 @@ class _MineSweeperState extends State<MineSweeper> {
     _resetBoard();
   }
 
-  void _sweep(int x, int y) {
-    if (!isGameOver) {
-      _pick(x, y);
-      print("c: " + coverBoard.toString());
-      print("b: " + board.toString());
-    }
-  }
-
-  void _pick(int x, int y) {
-    setState(() {
-      if (coverBoard[x][y].isEmpty) {
-        coverBoard[x][y] = "S";
-      }
-      if (board[x][y] == "X") {
-        isGameOver = true;
-      }
-    });
-  }
-
   void _resetBoard() {
-    setState(() {
-      board = board
-          .map((list) => list
-              .map((item) => Random().nextInt(random_seed) == 0 ? "X" : "O")
-              .toList())
-          .toList();
-
-      coverBoard =
-          coverBoard.map((list) => list.map((item) => "").toList()).toList();
-    });
+    setState(() {});
 
     isGameOver = false;
   }
@@ -71,7 +25,7 @@ class _MineSweeperState extends State<MineSweeper> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: buildAppBar(context, "Mine Sweeper"),
+            appBar: buildAppBar(context, "Snake"),
             drawer: buildDrawer(context),
             body: _buildBody(context),
             floatingActionButton:
@@ -118,9 +72,7 @@ class _MineSweeperState extends State<MineSweeper> {
         right: borderStyle);
 
     return InkWell(
-        onTap: () {
-          _sweep(x, y);
-        },
+        onTap: () {},
         child: (Container(
             decoration: BoxDecoration(
               color: Colors.grey,
@@ -128,11 +80,6 @@ class _MineSweeperState extends State<MineSweeper> {
             ),
             height: height,
             width: width,
-            child: Center(child: Text((() {
-              if (coverBoard[x][y].toString() == '') {
-                return '';
-              }
-              return board[x][y].toString();
-            })())))));
+            child: Center(child: Text("Hi")))));
   }
 }

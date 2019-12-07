@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'layout/appbar.dart';
 import 'layout/drawer.dart';
+import 'layout/floatingActionButton.dart';
 
 class TicTacToe extends StatefulWidget {
   _TicTacToeState createState() => _TicTacToeState();
@@ -48,7 +49,7 @@ class _TicTacToeState extends State<TicTacToe> {
     }
   }
 
-  void _resetBoard() {
+  void resetBoard() {
     setState(() {
       board = [
         ["", "", ""],
@@ -75,11 +76,8 @@ class _TicTacToeState extends State<TicTacToe> {
             appBar: buildAppBar(context, "Tic Tac Toe"),
             drawer: buildDrawer(context),
             body: _buildBody(context),
-            floatingActionButton: FloatingActionButton(
-              onPressed: _resetBoard,
-              tooltip: '重玩',
-              child: Icon(Icons.refresh),
-            )));
+            floatingActionButton:
+                buildFloatingActionButton(context, resetBoard)));
   }
 
   Widget _buildBody(BuildContext context) {
