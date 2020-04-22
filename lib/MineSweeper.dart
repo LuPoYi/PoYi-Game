@@ -25,7 +25,7 @@ class _MineSweeperState extends State<MineSweeper> {
     ["", "", "", "", ""],
   ];
 
-  int random_seed = 5;
+  int randomSeed = 5;
   bool isGameOver = false;
 
   @override
@@ -56,7 +56,7 @@ class _MineSweeperState extends State<MineSweeper> {
     setState(() {
       board = board
           .map((list) => list
-              .map((item) => Random().nextInt(random_seed) == 0 ? "X" : "O")
+              .map((item) => Random().nextInt(randomSeed) == 0 ? "X" : "O")
               .toList())
           .toList();
 

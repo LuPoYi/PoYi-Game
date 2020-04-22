@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'TicTacToe.dart';
 import 'MineSweeper.dart';
 
 class LoginPage extends StatelessWidget {

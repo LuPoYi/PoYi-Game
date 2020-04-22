@@ -3,6 +3,7 @@ import 'package:poyi_game/TicTacToe.dart';
 import 'package:poyi_game/MineSweeper.dart';
 import 'package:poyi_game/Tetris.dart';
 import 'package:poyi_game/Snake.dart';
+import 'package:poyi_game/Sensor.dart';
 
 Widget buildDrawer(BuildContext context) {
   return Drawer(
@@ -47,6 +48,13 @@ Widget buildDrawer(BuildContext context) {
           onTap: () {
             Navigator.push(context,
                 new MaterialPageRoute(builder: (context) => new Snake()));
+          },
+        ),
+        ListTile(
+          title: Text('Sensor!'),
+          onTap: () {
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => new Sensor()));
           },
         ),
       ],

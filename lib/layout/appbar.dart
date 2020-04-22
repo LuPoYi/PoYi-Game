@@ -7,6 +7,7 @@ Widget buildAppBar(BuildContext context, String title) {
     actions: <Widget>[
       IconButton(
         icon: const Icon(Icons.add_alert),
+        onPressed: () {},
       )
     ],
   );
