@@ -5,6 +5,7 @@ import 'layout/drawer.dart';
 import 'package:sensors/sensors.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:math';
 
 class Sensor extends StatefulWidget {
   _SensorState createState() => _SensorState();
@@ -12,6 +13,11 @@ class Sensor extends StatefulWidget {
 
 class _SensorState extends State<Sensor> {
   bool isVolumeUp = true;
+  int count = 0;
+  Color currentColor;
+  bool frontRound = false;
+  bool backRound = false;
+  bool isUp = true;
   int accelerometerX;
   int accelerometerY;
   int accelerometerZ;
@@ -40,46 +46,77 @@ class _SensorState extends State<Sensor> {
       if (event.x.toInt() != accelerometerX ||
           event.y.toInt() != accelerometerY ||
           event.z.toInt() != accelerometerZ) {
+        // 正轉180 0 -> 10 -> 0
+        // 180轉正 0 -> -10 -> 0
+
         setState(() {
           accelerometerX = event.x.toInt();
           accelerometerY = event.y.toInt();
           accelerometerZ = event.z.toInt();
 
           if (isVolumeUp) {
-            if (accelerometerX != null && accelerometerX > 9) {
-              player.play('line_a_66.mp3');
-              Fluttertoast.showToast(
-                  msg: "line_a_66.mp3",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.blue,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+            if (accelerometerY != null && accelerometerY > 8) {
+              frontRound = true;
+            }
+            if (accelerometerY != null && accelerometerY < -8) {
+              backRound = true;
+            }
+            if (accelerometerY != null && accelerometerY == 0) {
+              if (frontRound && backRound) {
+                frontRound = false;
+                backRound = false;
+                count++;
+                currentColor = getRandomColor();
+                if (count < 10) {
+                  player.play('line_a_66.mp3');
+                } else {
+                  player.play('line_logo_sound_short.mp3');
+                }
+                Fluttertoast.showToast(
+                    msg: "line_a_66.mp3",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.blue,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
             }
 
-            if (accelerometerY != null && accelerometerY > 9) {
-              player.play('line_logo_sound_short.mp3');
-              Fluttertoast.showToast(
-                  msg: "line_logo_sound_short.mp3",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            }
-            if (accelerometerZ != null && accelerometerZ > 9) {
-              player.play('line_logo_sound.mp3');
-              Fluttertoast.showToast(
-                  msg: "line_logo_sound.mp3",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            }
+            // if (accelerometerX != null && accelerometerX > 9) {
+            //   player.play('line_a_66.mp3');
+            //   Fluttertoast.showToast(
+            //       msg: "line_a_66.mp3",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.CENTER,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.blue,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            // }
+
+            // if (accelerometerY != null && accelerometerY > 9) {
+            //   player.play('line_logo_sound_short.mp3');
+            //   Fluttertoast.showToast(
+            //       msg: "line_logo_sound_short.mp3",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.CENTER,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.red,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            // }
+            // if (accelerometerZ != null && accelerometerZ > 9) {
+            //   player.play('line_logo_sound.mp3');
+            //   Fluttertoast.showToast(
+            //       msg: "line_logo_sound.mp3",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.CENTER,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.green,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            // }
           }
         });
       }
@@ -118,7 +155,8 @@ class _SensorState extends State<Sensor> {
         ?.toList();
 
     return Scaffold(
-      appBar: buildAppBar(context, "Sensors Example"),
+      backgroundColor: currentColor,
+      appBar: buildAppBar(context, "Sensors Example", resetCount),
       drawer: buildDrawer(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,6 +189,7 @@ class _SensorState extends State<Sensor> {
               Text(gyroscope != null ? gyroscope[2] : "X"),
             ],
           ),
+          Text("Result: $count")
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -162,5 +201,14 @@ class _SensorState extends State<Sensor> {
         },
       ),
     );
+  }
+
+  void resetCount() {
+    count = 0;
+  }
+
+  Color getRandomColor() {
+    return Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255),
+        Random().nextInt(255));
   }
 }
