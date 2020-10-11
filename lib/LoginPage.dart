@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
       ),
     );
 
-    // 3d
     return Scaffold(
       backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       body: Center(

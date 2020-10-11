@@ -44,3 +44,5 @@ build/
 packages
 pubspec.lock
 .atom
+
+ios/Runner/GoogleService-Info.plist
